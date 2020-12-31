@@ -1,20 +1,20 @@
 import "./styles/main.scss"
-import animate, {Easing} from "./../../dist/index.umd.js";
+import raf, {Easing} from "./../../dist/index.umd.js";
 import RangeExample from "./scripts/RangeExample";
 
-animate.start({
+raf.start({
   auto: false
 });
 
 
 var customLoop = () => {
-  animate.loop();
+  raf.loop();
   requestAnimationFrame(customLoop);
 }
 customLoop();
 
 
-const a = animate
+const a = raf
   .add()
   .on('progress', ({value}) => {
     console.log('up', value);
@@ -39,7 +39,7 @@ window.addEventListener('load', ()=>{
     example.$element.addEventListener('mouseenter', () => {
       if (anim) return;
       var a = 0;
-      anim = animate.add({
+      anim = raf.add({
         to: 100,
         duration: 600,
         delay: 500,
