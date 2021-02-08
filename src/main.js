@@ -2,6 +2,11 @@
  * @private
  * A stack of callback attach to a specific fps rate
  */
+
+if (typeof window === 'undefined' && typeof 'requestAnimationFrame' === 'undefined') {
+  const requestAnimationFrame = (a) => {}
+}
+
 export class TickStack {
   constructor(fps = 60) {
     this.fps = fps
@@ -40,7 +45,7 @@ export class TickStack {
 
 export class Raf {
   constructor() {
-    this.now = performance.now()
+    this.now = Date.now()
     this.latest = this.now
     this.delta = this.now - this.latest
     this.playing = false
@@ -48,7 +53,7 @@ export class Raf {
   }
 
   start() {
-    if (!process.client) return
+    if (typeof window === 'undefined' || this.playing) return
     this.playing = true
     this.loop()
   }
@@ -57,14 +62,14 @@ export class Raf {
     this.playing = false
   }
 
-  addTick(tick, callback) {
+  addTick(callback, tick = 60) {
     if (!this.tickStacks[tick]) {
       this.tickStacks[tick] = new TickStack(tick)
     }
     this.tickStacks[tick].add(callback)
   }
 
-  removeTick(tick, callback) {
+  removeTick(callback, tick = 60) {
     if (!this.tickStacks[tick]) return
     this.tickStacks[tick].remove(callback)
     if (this.tickStacks[tick].isEmpty) {
@@ -74,7 +79,7 @@ export class Raf {
 
   loop() {
     this.latest = this.now
-    this.now = performance.now()
+    this.now = Date.now()
 
     Object.keys(this.tickStacks).forEach((key) => {
       this.tickStacks[key].loop(this.now)
