@@ -27,7 +27,10 @@ export class TickStack {
   }
 
   remove(callback) {
-    this.callbacks.splice(this.callbacks.indexOf(callback), 1)
+    const index = this.callbacks.indexOf(callback)
+    if (index > -1) {
+      this.callbacks.splice(this.callbacks.indexOf(callback), 1)
+    }
   }
 
   loop(now) {
