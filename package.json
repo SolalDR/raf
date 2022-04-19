@@ -17,7 +17,7 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "pretest": "npm run build",
-    "publish": "npm publish --access public"
+    "deploy": "npm publish --access public"
   },
   "files": [
     "dist"
