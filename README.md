@@ -20,8 +20,8 @@ yarn add @solaldr/raf
 import Raf from '@solaldr/raf'
 Raf.start()
 
-Raf.addTick(40, myAnimCallback) // 40 times per seconds
-Raf.addTick(60, myRenderCallback) // 60 times per seconds
+Raf.addTick(myAnimCallback, 40) // 40 times per seconds
+Raf.addTick(myRenderCallback, 60) // 60 times per seconds
 ```
 
 ## License
